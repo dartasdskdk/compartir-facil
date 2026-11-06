@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Compartir Fácil</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <div class="container">
+    <div class="intro">
+      <div class="logo"><ion-icon name="share-social-outline"></ion-icon></div>
+      <h1>Compartí en segundos</h1>
+      <p>Enviá textos, enlaces e información mediante las aplicaciones de tu teléfono.</p>
+    </div>
+    <ion-segment [(ngModel)]="modo" aria-label="Tipo de contenido">
+      <ion-segment-button value="texto"><ion-icon name="chatbubble-ellipses-outline"></ion-icon><ion-label>Texto</ion-label></ion-segment-button>
+      <ion-segment-button value="enlace"><ion-icon name="link-outline"></ion-icon><ion-label>Enlace</ion-label></ion-segment-button>
+      <ion-segment-button value="contacto"><ion-icon name="person-outline"></ion-icon><ion-label>Contacto</ion-label></ion-segment-button>
+    </ion-segment>
+    <ion-card>
+      <ion-card-header><ion-card-title>
+        @if (modo === 'texto') { Compartir un mensaje }
+        @else if (modo === 'enlace') { Compartir un enlace }
+        @else { Compartir información }
+      </ion-card-title></ion-card-header>
+      <ion-card-content>
+        @if (modo === 'texto') {
+          <ion-item><ion-textarea label="Tu mensaje" labelPlacement="stacked" [autoGrow]="true" [rows]="5" [(ngModel)]="mensaje" placeholder="Escribí algo..."></ion-textarea></ion-item>
+        } @else if (modo === 'enlace') {
+          <ion-item><ion-input label="Dirección web" labelPlacement="stacked" type="url" [(ngModel)]="enlace" placeholder="https://ejemplo.com"></ion-input></ion-item>
+        } @else {
+          <ion-item><ion-input label="Nombre" labelPlacement="stacked" [(ngModel)]="nombre"></ion-input></ion-item>
+          <ion-item><ion-input label="Correo electrónico" labelPlacement="stacked" type="email" [(ngModel)]="correo"></ion-input></ion-item>
+        }
+        <ion-button expand="block" size="large" (click)="compartir()"><ion-icon slot="start" name="share-social-outline"></ion-icon>Compartir ahora</ion-button>
+        <ion-note>Se abrirá el menú nativo para elegir una aplicación instalada.</ion-note>
+      </ion-card-content>
+    </ion-card>
+    <p class="footer">Ionic + Angular + Capacitor Share</p>
+  </div>
+  <ion-toast [isOpen]="mostrarAviso" [message]="aviso" [duration]="2600" (didDismiss)="mostrarAviso = false"></ion-toast>
+</ion-content>
